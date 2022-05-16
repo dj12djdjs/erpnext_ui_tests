@@ -4,6 +4,11 @@ context('Delivery Note Creation', () => {
 	});
 
 	it('Create DN via SI', () => {
+		const timeout = setTimeout(() => {
+			throw new Error("Test stuck")
+		}, 3 * 60 * 1000);
+
+
 		var today = new Date();
 		const yyyy = today.getFullYear();
 		let mm = today.getMonth() + 1; // Months start at 0!
@@ -50,5 +55,7 @@ context('Delivery Note Creation', () => {
 		cy.visit('app/sales-order');
 		cy.click_listview_row_item(0);
 		cy.get_page_title().should('contain', 'Completed');
+
+		clearTimeout(timeout);
 	});
 });
